@@ -5,189 +5,184 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-simple.css">
     <script src="index.js" defer></script>
+     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
 </head>
 
 <body>
-    <header>
-        <img src="asset/elan.png" alt="Logo">
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-        <a href="#">Telecharger</a>
+    <header class="topbar">
+        <div class="container-1200 topbar-inner">
+            <a href="#" class="brand decoration-none">
+                <img src="asset/elan.png" alt="Logo ELAN">
+                <span>ELAN</span>
+            </a>
+
+            <nav class="top-nav">
+                <a href="#" class="decoration-none">Accueil</a>
+                <a href="#" class="decoration-none">Documentation</a>
+            </nav>
+
+            <a href="#" class="btn-download decoration-none">Télécharger l'applis</a>
+        </div>
     </header>
 
-    <!--Hero-->
-    <section>
-        <!--phrase d'accroche-->
-        <div>
-            <p>Une app française qui transforme l'entraide en pouvoir d'achat utile</p>
+    <div class="page-shell">
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <h1>Chaque mission est un nouvel ÉLAN.</h1>
+                <p>
+                    Élan aide les personnes en difficulté financière à trouver,
+                    près de chez elles, des missions simples dans des commerces
+                    partenaires locaux, puis à échanger leurs crédits solidaires
+                    contre des produits alimentaires frais dans ces mêmes commerces.
+                </p>
+                <div class="hero-actions">
+                    <a href="#" class="btn-download decoration-none hero-cta">Télécharger l'applis</a>
+                    <div class="store-badges" aria-label="Télécharger sur les stores">
+                        <a href="#" class="store-badge-link decoration-none" aria-label="Télécharger sur Google Play">
+                            <img src="asset/google play.png" alt="Disponible sur Google Play">
+                        </a>
+                        <a href="#" class="store-badge-link decoration-none" aria-label="Télécharger sur l'App Store">
+                            <img src="asset/apple store.png" alt="Disponible sur l'App Store">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <img src="asset/Mockup_accueil_2 1.png" alt="Aperçu de l'application Élan">
+            </div>
         </div>
-        <div>
-            <h1>Chaque mission est un nouvel ÉLAN.</h1>
-            <p>Élan aide les personnes en difficulté financière à trouver, près de chez elles, des missions simples dans
-                des commerces partenaires locaux — puis à échanger leurs crédits solidaires contre des produits
-                alimentaires frais dans ces mêmes commerces.</p>
-
-
-            <!--les boutons-->
-
-            <a href="#">Télécharger l'application</a>
-            <a href="#">Inscrire commerce</a>
-
-        </div>
-
-        <img src="asset/Mockup_accueil_2 1.png" alt="">
-
     </section>
 
-    <!--2ème section-->
-
-    <section>
-
-        <div>
-            <p>5000</p>
-            <p>Utilisateur Actif</p>
+    <!-- Chiffres -->
+    <section class="stats">
+        <div class="stats-inner">
+            <div class="stat-item">
+                <p class="stat-value stat-blue">3000</p>
+                <p class="stat-label">utilisateurs actifs</p>
+            </div>
+            <div class="stat-item">
+                <p class="stat-value stat-green">200</p>
+                <p class="stat-label">Commerces partenaires</p>
+            </div>
+            <div class="stat-item">
+                <p class="stat-value stat-orange">250K</p>
+                <p class="stat-label">Élans distribués</p>
+            </div>
         </div>
-        <div>
-            <p>200</p>
-            <p>Commerces partenaires</p>
-        </div>
-        <div>
-            <p>250k</p>
-            <p>Elan Distribués</p>
-        </div>
-
     </section>
 
-    <!--3ème section-->
+    <!--section comment sa marche-->
 
     <section>
-
+        <p>Comment ça marche</p>
+        <h2>Simple, concret, humain.</h2>
+        <p>Avec Elan, chacun trouve sa place : une mission utile à proximité, une récompense claire, puis des courses plus faciles à boucler pour soi et pour son foyer.</p>
         <div>
-
-            <h2></h2>
-
-            <p></p>
-
-        </div>
-
-        <div>
-
             <div>
-
-                <img src="" alt="">
-
-                <img src="" alt="">
-
-                <p></p>
-
+                <p>1</p>
+                <i class="ph ph-magnifying-glass"></i>
+                <div>
+                    <h6>Trouvez une mission près de chez vous</h6>
+                    <p>L'application vous propose des missions courtes dans des commerces partenaires locaux : mise en rayon, inventaire, préparation de commandes.</p>
+                </div>
             </div>
 
             <div>
-
-                <img src="" alt="">
-
-                <img src="" alt="">
-
-                <p></p>
-
+                <p>2</p>
+                <i class="ph ph-hand-heart"></i>
+                <div>
+                    <h6>Effectuez la mission et gagnez des Élans</h6>
+                    <p>Une fois la tâche terminée, vos crédits solidaires sont ajoutés à votre compte. Pas de jargon, pas de complication : vous voyez ce que vous gagnez.
+                    </p>
+                </div>
             </div>
 
             <div>
-
-                <img src="" alt="">
-
-                <img src="" alt="">
-
-                <p></p>
-
+                <p>3</p>
+                <i class="ph ph-shopping-cart"></i>
+                <div>
+                    <h6>Utilisez vos Élans pour acheter du frais</h6>
+                    <p>Transformez vos crédits en produits alimentaires frais, directement dans les commerces partenaires, pour un soutien concret et local.</p>
+                </div>
             </div>
+            
 
         </div>
 
 
-    </section>
-
-    <!--4ème section-->
-
-    <section>
-
-        <div>
-
-            <h2></h2>
-
-            <p></p>
-
-        </div>
-
-        <div>
-
-            <div>
-                <p></p>
-
-                <li>
-                    <p></p>
-                </li>
-
-                <li>
-                    <p></p>
-                </li>
-
-                <li>
-                    <p></p>
-                </li>
-
-
-            </div>
-
-            <div>
-                <p></p>
-
-                <li>
-                    <p></p>
-                </li>
-
-                <li>
-                    <p></p>
-                </li>
-
-                <li>
-                    <p></p>
-                </li>
-
-            </div>
-
-        </div>
 
 
     </section>
 
-    <!--5ème section-->
+    <!--section double benefice-->
 
     <section>
+        <p>Double bénéfice</p>
+        <h2>Une aide utile pour les personnes, une force supplémentaire pour les commerces.</h2>
 
         <div>
-
             <div>
-
-                <p></p>
-
+                <div>
+                    <i class="ph ph-users"></i>
+                    <h3>Pour les utilisateurs</h3>
+                </div>
+                <ul>
+                    <li>Des missions accessibles, proches, utiles, adaptées à des contraintes réelles.</li>
+                    <li>Un moyen simple de convertir son temps en crédits solidaires concrets.</li>
+                    <li>L'accès à des produits alimentaires frais, dans un cadre digne et familier.</li>
+                </ul>
             </div>
 
             <div>
-
-                <img src="" alt="">
+                <div>
+                    <i class="ph ph-storefront"></i>
+                    <h3>Pour les commerçants locaux</h3>
+                </div>
+                <ul>
+                    <li>Un coup de main ponctuel sur des tâches du quotidien, au bon moment.</li>
+                    <li>Une relation locale plus forte avec des habitants engagés dans la vie du quartier.</li>
+                    <li>Une image solidaire et ancrée dans le territoire, sans perdre en simplicité opérationnelle.</li>
+                </ul>
             </div>
-
         </div>
+    </section>
 
+    <!--section avis client-->
+
+    <section>
+        <div class="avis-layout">
+            <div class="avis-left">
+                <p>Ils ont déjà pris leur ELAN</p>
+                <h2>Des utilisateurs déjà conquis !</h2>
+                <p>Découvrez les témoignages de celles et ceux qui utilisent ELAN au quotidien pour avancer et atteindre leurs objectifs.</p>
+            </div>
+
+            <div class="avis-right">
+                <article id="avis-card" class="avis-card">
+                    <div class="avis-card-top">
+                        <span id="avis-quote" class="avis-quote">“</span>
+                        <span id="avis-stars" class="avis-stars">★★★★★</span>
+                    </div>
+
+                    <p id="avis-text" class="avis-text"></p>
+
+                    <div class="avis-user">
+                        <img id="avis-avatar" src="asset/photo claire.png" alt="Photo utilisateur">
+                        <div>
+                            <p id="avis-name" class="avis-name"></p>
+                            <p id="avis-age" class="avis-age"></p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
     </section>
 
     <!--6ème section-->
@@ -196,26 +191,35 @@
 
 
         <div>
-            <h1></h1>
-            <p></p>
+            <h1 class="white">Faisons grandir une solidarité locale qui rend service, tout de suite.</h1>
+            <p>Élan connecte des personnes, des commerces et des besoins du quotidien. Téléchargez l'application et
+                découvrez une manière plus simple, plus humaine et plus proche de se soutenir les uns les autres.</p>
 
 
             <!--les boutons-->
 
-            <p></p>
+            <p>Télécharger l'applis</p>
 
-            <p></p>
+            <p>Voir la documentation</p>
 
         </div>
 
         <div>
 
-            <p></p>
+            <p>Ce que promet Élan</p>
 
+            <ul>
             <li>
+<p>De l'entraide utile, ancrée dans les quartiers.</p>
 
+<p>Un parcours clair, rassurant et accessible.</p>
+
+<p>Un impact concret pour les personnes et les commerces locaux.</p>
+                
+                
             </li>
-
+</ul>
+            
         </div>
 
     </section>
@@ -224,17 +228,18 @@
 
     <section>
 
+        <h2 class=""> Nos partenaires</h2>
         <div>
 
-            <img src="" alt="">
+            <img src="asset/partenaire 1.png" alt="">
 
-            <img src="" alt="">
+            <img src="asset/partenaire 2.png" alt="">
 
-            <img src="" alt="">
+            <img src="asset/partenaire 3.png" alt="">
 
-            <img src="" alt="">
+            <img src="asset/partenaire 4.png" alt="">
 
-            <img src="" alt="">
+            <img src="asset/partenaire 5.png" alt="">
 
         </div>
 
@@ -262,6 +267,8 @@
         </div>
 
     </footer>
+
+    </div>
 </body>
 
 </html>
