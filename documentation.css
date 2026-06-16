@@ -544,6 +544,10 @@ header nav a{
     padding: 16px;
 }
 
+.padding-64{
+    padding: 64px;
+}
+
 /* ------------------------------
             CONTAINER
  ---------------------------------*/
@@ -571,6 +575,12 @@ header nav a{
 
 .fixed {
     position: fixed;
+}
+
+.sticky{
+    position: sticky;
+    top: 0px;
+    z-index: 100;
 }
 
 /*card*/
