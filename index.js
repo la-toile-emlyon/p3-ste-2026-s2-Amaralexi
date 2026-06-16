@@ -1,80 +1,174 @@
-const card = document.getElementById('avis-card');
-const quoteEl = document.getElementById('avis-quote');
-const starsEl = document.getElementById('avis-stars');
-const textEl = document.getElementById('avis-text');
-const avatarEl = document.getElementById('avis-avatar');
-const nameEl = document.getElementById('avis-name');
-const ageEl = document.getElementById('avis-age');
+// ===== 1) Section avis =====
+// On recupere les elements HTML utiles.
+const carteAvis = document.getElementById('review-card');
+const guillemetAvis = document.getElementById('quote-mark');
+const imageEtoiles = document.getElementById('stars');
+const texteAvis = document.getElementById('review-text');
+const avatarUtilisateur = document.getElementById('user-avatar');
+const nomUtilisateur = document.getElementById('user-name');
+const ageUtilisateur = document.getElementById('user-age');
 
-let comments = [];
-let currentIndex = 0;
-const SWITCH_DELAY = 5000;
-const ANIMATION_DELAY = 450;
+// Variables globales simples.
+let listeAvis = [];
+let indexAvisActuel = 0;
+const DELAI_CHANGEMENT_AVIS = 5000;
+const DELAI_ANIMATION_AVIS = 450;
 
-function buildStars(rating) {
-	const safeRating = Number.isFinite(rating) ? rating : 5;
-	return '★'.repeat(Math.max(0, Math.min(5, safeRating)));
+const AVATAR_PAR_DEFAUT = 'asset/photo hugo.png';
+const IMAGE_ETOILES = 'asset/⭐⭐⭐⭐⭐.png';
+
+// Affiche un avis dans la carte.
+function afficherAvis(avis) {
+    const couleurGuillemet = avis.quoteColor === 'orange' ? 'orange' : 'green';
+    const cheminAvatar = avis.avatar ? avis.avatar : AVATAR_PAR_DEFAUT;
+
+    guillemetAvis.classList.toggle('orange', couleurGuillemet === 'orange');
+    guillemetAvis.textContent = '"';
+    imageEtoiles.src = IMAGE_ETOILES;
+
+    texteAvis.textContent = avis.text;
+    avatarUtilisateur.src = cheminAvatar;
+    avatarUtilisateur.alt = `Photo de ${avis.author}`;
+    nomUtilisateur.textContent = avis.author;
+    ageUtilisateur.textContent = `${avis.age} ans`;
 }
 
-function applyComment(comment) {
-	const quoteColor = comment.quoteColor === 'orange' ? 'orange' : 'green';
-	const avatarPath = comment.avatar ? comment.avatar : 'asset/photo claire.png';
+// Passe a l'avis suivant avec animation.
+function passerAvisSuivant() {
+    if (!listeAvis.length || !carteAvis) {
+        return;
+    }
 
-	quoteEl.classList.toggle('orange', quoteColor === 'orange');
-	quoteEl.textContent = '“';
-	starsEl.textContent = buildStars(comment.rating);
-	textEl.textContent = comment.text;
-	avatarEl.src = avatarPath;
-	avatarEl.alt = `Photo de ${comment.author}`;
-	nameEl.textContent = comment.author;
-	ageEl.textContent = `${comment.age} ans`;
+    carteAvis.classList.remove('fade-in');
+    carteAvis.classList.add('fade-out');
+
+    setTimeout(() => {
+        indexAvisActuel = (indexAvisActuel + 1) % listeAvis.length;
+        afficherAvis(listeAvis[indexAvisActuel]);
+
+        carteAvis.classList.remove('fade-out');
+        carteAvis.classList.add('fade-in');
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                carteAvis.classList.remove('fade-in');
+            });
+        });
+    }, DELAI_ANIMATION_AVIS);
 }
 
-function showNextComment() {
-	if (!comments.length || !card) {
-		return;
-	}
+// Charge les avis depuis le fichier JSON.
+async function initialiserAvis() {
+    if (!carteAvis || !texteAvis) {
+        return;
+    }
 
-	card.classList.remove('fade-in-right');
-	card.classList.add('fade-out-left');
+    try {
+        const reponse = await fetch('json/data.json');
+        const donnees = await reponse.json();
 
-	setTimeout(() => {
-		currentIndex = (currentIndex + 1) % comments.length;
-		applyComment(comments[currentIndex]);
+        listeAvis = Array.isArray(donnees.comments) ? donnees.comments : [];
 
-		card.classList.remove('fade-out-left');
-		card.classList.add('fade-in-right');
+        if (!listeAvis.length) {
+            texteAvis.textContent = 'Aucun commentaire disponible pour le moment.';
+            return;
+        }
 
-		requestAnimationFrame(() => {
-			requestAnimationFrame(() => {
-				card.classList.remove('fade-in-right');
-			});
-		});
-	}, ANIMATION_DELAY);
+        // Si Julien existe, on le met en premier.
+        const indexJulien = listeAvis.findIndex((element) => element.author === 'Julien');
+        if (indexJulien > 0) {
+            const avisJulien = listeAvis[indexJulien];
+            listeAvis.splice(indexJulien, 1);
+            listeAvis.unshift(avisJulien);
+        }
+
+        afficherAvis(listeAvis[0]);
+        setInterval(passerAvisSuivant, DELAI_CHANGEMENT_AVIS);
+    } catch (erreur) {
+        texteAvis.textContent = 'Impossible de charger les commentaires pour le moment.';
+        console.error('Erreur chargement commentaires:', erreur);
+    }
 }
 
-async function initReviews() {
-	if (!card || !textEl) {
-		return;
-	}
+initialiserAvis();
 
-	try {
-		const response = await fetch('json/data.json');
-		const data = await response.json();
+// ===== 2) Section mockups =====
+// Ouvre les mockups au survol (desktop) et au clic (mobile).
+function initialiserMockupsEtapes() {
+    const listeEtapes = document.querySelectorAll('.bloc-etape');
 
-		comments = Array.isArray(data.comments) ? data.comments : [];
+    if (!listeEtapes.length) {
+        return;
+    }
 
-		if (!comments.length) {
-			textEl.textContent = 'Aucun commentaire disponible pour le moment.';
-			return;
-		}
+    listeEtapes.forEach((etape) => {
+        const zoneMockup = etape.querySelector('.zone-mockup');
 
-		applyComment(comments[0]);
-		setInterval(showNextComment, SWITCH_DELAY);
-	} catch (error) {
-		textEl.textContent = 'Impossible de charger les commentaires pour le moment.';
-		console.error('Erreur chargement commentaires:', error);
-	}
+        if (!zoneMockup) {
+            return;
+        }
+
+        etape.addEventListener('mouseenter', () => {
+            etape.classList.add('is-open');
+        });
+
+        etape.addEventListener('mouseleave', () => {
+            etape.classList.remove('is-open');
+        });
+
+        zoneMockup.addEventListener('click', (event) => {
+            event.stopPropagation();
+
+            const estOuvert = etape.classList.contains('is-open');
+
+            listeEtapes.forEach((item) => {
+                item.classList.remove('is-open');
+            });
+
+            if (!estOuvert) {
+                etape.classList.add('is-open');
+            }
+        });
+    });
+
+    // Clic en dehors: on ferme tout.
+    document.addEventListener('click', () => {
+        listeEtapes.forEach((etape) => {
+            etape.classList.remove('is-open');
+        });
+    });
 }
 
-initReviews();
+initialiserMockupsEtapes();
+
+// ===== 3) Header au scroll =====
+// Cache le header quand on descend, le remonte quand on monte.
+function initialiserHeaderAuScroll() {
+    const entete = document.querySelector('.header');
+
+    if (!entete) {
+        return;
+    }
+
+    let dernierScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+        const scrollActuelY = window.scrollY;
+
+        if (scrollActuelY <= 10) {
+            entete.classList.remove('header-hidden');
+            dernierScrollY = scrollActuelY;
+            return;
+        }
+
+        if (scrollActuelY > dernierScrollY) {
+            entete.classList.add('header-hidden');
+        } else {
+            entete.classList.remove('header-hidden');
+        }
+
+        dernierScrollY = scrollActuelY;
+    });
+}
+
+initialiserHeaderAuScroll();
