@@ -7,8 +7,10 @@
     <title>ELAN</title>
     <link rel="stylesheet" href="style-simple.css">
     <script src="index.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@hiseb/confetti@2.1.0/dist/confetti.min.js"></script>
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+        
 </head>
 
 <body>
@@ -329,6 +331,12 @@
         </footer>
 
         <button class="bouton-retour-haut" id="bouton-retour-haut" aria-label="Retour en haut">↑</button>
+
+        <div id="skull-overlay" class="skull-overlay" aria-hidden="true">
+            <div class="skull-fallback" aria-hidden="true">ELAN PARTY</div>
+            <img id="skull-celebration-center" class="skull-celebration"
+                src="asset/skull-dance.gif" alt="Skeleton dance centre">
+        </div>
 
     </main>
 </body>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
- 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,9 @@
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
     <link rel="stylesheet" href="documentation.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="document.js" defer></script>
 
 </head>
 
@@ -30,16 +33,16 @@
         </div>
     </header>
 
-    <!--div smmaire-->
+    <!--div sommaire-->
     <div class="bg-section-color sticky sommaire-documentation">
         <nav class="flex white space-around align-center padding-45">
-            <p>Sommaire</p>
+            <p class="bold ft-20">Sommaire</p>
 
             <a href="#Contexte">Contexte</a>
             <a href="#Comment">Comment</a>
             <a href="#Nos Services">Nos Services</a>
-            <a href="#Maquette">Maquette</a>
-            <a href="#Test">Test</a>
+            <a href="#Maquette">Maquettes</a>
+            <a href="#Test">Tests Utilisateurs</a>
             <a href="#Evolution">Evolution</a>
         </nav>
     </div>
@@ -49,8 +52,8 @@
     <section class="bg-section-color pt-128 pb-128 flex flex-colonne gap-64 align-center" id="Contexte">
         <h2 class="white font-size40 ft-poppins">Contexte</h2>
 
-        <div class="bg-div-color w-50 padding-32 border-10 box-shadow ft-poppins">
-            <h3 class="mb-16 ft-20">Comment nous en somme arrivé la</h3>
+        <div class="bg-div-color w-50 padding-32 border-10 ft-poppins">
+            <h3 class="mb-16 ft-20">Comment nous en somme arrivé la ?</h3>
             <p class="ft-16">En observant le quotidien de nos commerces de quartier et les difficultés d'accès aux
                 produits de qualité, une évidence s'est imposée: la solution se trouve dans la proximité. ELAN est née
                 de cette
@@ -68,26 +71,26 @@
         <h2 class="text-center mb-32 mt-16 gros pb-16 ft-poppins">Comment</h2>
         <div class="flex space-between container-1000">
 
-            <div class="w-25 padding-16  box-shadow border-10">
+            <div class="w-25 padding-16  box-shadow border-10 bg-blanc" data-aos="fade-up" data-aos-duration="3000">
                 <div class="w-100 flex space-between pb-16">
                     <img src="asset/chiffre 1.png" allt="icone numéro 1">
-                    <img src="asset/UsersThree.png" allt="icone avec trois personnes">
+                    <i class="ph ph-users-three ft-40 chiffre-bleu"></i>
                 </div>
                 <h3 class="chiffre-bleu pb-16 ft-20">Qui</h3>
                 <p class="chiffre-bleu">Pour les citoyens désireux d'agir, les personnes en quête d'un soutien
                     alimentaire et les commerçants locaux engagés. ELAN rassemble toute une communauté solidaire.</p>
             </div>
-            <div class="w-25 padding-16 box-shadow border-10">
+            <div class="w-25 padding-16 box-shadow border-10 bg-blanc" data-aos="fade-down" data-aos-duration="3000">
 
                 <div class="w-100 flex space-between pb-16">
                     <img src="asset/chiffre 2.png" allt="icone numéro 2">
-                    <img src="asset/CalendarDots.png" allt="icone avec trois personnes">
+                    <i class="ph ph-calendar-dots ft-40 orange"></i>
                 </div>
                 <h3 class="chiffre-bleu pb-16 ft-20">Quand</h3>
                 <p class="chiffre-bleu">Pour lutter concrètement contre la précarité alimentaire, valoriser l'entraide
                     locale et favoriser les circuits courts.</p>
             </div>
-            <div class="w-25 padding-16 box-shadow border-10">
+            <div class="w-25 padding-16 box-shadow border-10 bg-blanc" data-aos="fade-up" data-aos-duration="3000">
 
                 <div class="w-100 flex space-between pb-16">
                     <img src="asset/chiffre 3.png" allt="icone numéro 3">
@@ -110,43 +113,47 @@
 
     <!--3ème section NOS SERVICES-->
 
-    <section class="pt-64 pb-64 bg-section-color" id="Nos Services">
+    <section class="pt-128 pb-128 bg-section-color" id="Nos Services">
         <h2 class="text-center mb-32 mt-32 gros pb-16 white">Nos Services</h2>
         <div class="flex space-between container-1000">
 
-            <div class="w-25 padding-16 box-shadow border-10">
+            <div class="w-25 padding-16 border-10 bg-blanc" data-aos="zoom-in-right" data-aos-easing="ease-in-back"
+                data-aos-duration="1000">
 
                 <div class="w-100 flex space-between pb-16">
                     <img src="asset/chiffre 1.png" allt="icone numéro 1">
-                    <img src="asset/ShieldCheck.png" allt="icone bouclier">
+                    <i class="ph ph-shield-check chiffre-bleu ft-40"></i>
                 </div>
 
-                <h3 class="white pb-16">Missions Solidaires</h3>
-                <p class="white">Accomplissez de petites missions d'entraide au sein de la communauté pour
-                    accumuler des crédits et soutenir activement la vie de votre quartier.</p>
+                <h3 class="chiffre-bleu pb-16">Missions Solidaires</h3>
+                <p class="chiffre-bleu">Accomplissez de petites missions d'entraide au sein de la communauté pour
+                    accumuler des crédits et soutenir activement la vie des commerces autour de vous.</p>
             </div>
 
-            <div class="w-25 padding-16 box-shadow border-10">
+            <div class="w-25 padding-16 border-10 bg-blanc" data-aos="zoom-in-up" data-aos-easing="ease-in-back"
+                data-aos-duration="1600">
 
                 <div class="w-100 flex space-between pb-16">
                     <img src="asset/chiffre 2.png" allt="icone numéro 3">
-                    <img src="asset/CookingPot.png" allt="icone marmitte">
+                    <i class="ph ph-target ft-40 orange""></i>
                 </div>
 
-                <h3 class="white pb-16">Partage Alimentaire</h3>
-                <p class="white">Proposez ou récupérez des repas faits maison et des paniers partagés pour lutter
-                    concrètement contre le gaspillage et la précarité.
+                <h3 class="chiffre-bleu pb-16">Géolocalisation des Mission et Commerces</h3>
+                <p class="chiffre-bleu">Nous géolocalisons les missions et les commerces partenaires pour vous offrir
+                    une expérience fluide et intuitive, vous permettant de trouver rapidement les opportunités
+                    d'entraide et les produits frais à proximité.
                 </p>
             </div>
-            <div class="w-25 padding-16 box-shadow border-10">
+            <div class="w-25 padding-16 border-10 bg-blanc" data-aos="zoom-in-left" data-aos-easing="ease-in-back"
+                data-aos-duration="2000">
 
                 <div class="w-100 flex space-between pb-16">
                     <img src="asset/chiffre 3.png" allt="icone numéro 3">
-                    <img src="asset/Vector.png" allt="icone magasin">
+                    <i class="ph ph-storefront ft-40 green"></i>
                 </div>
 
-                <h3 class="white pb-16">Commerces Partenaires</h3>
-                <p class="white">Échangez vos crédits cumulés directement en magasin contre des produits
+                <h3 class="chiffre-bleu pb-16">Commerces Partenaires</h3>
+                <p class="chiffre-bleu">Échangez vos crédits cumulés directement en magasin contre des produits
                     alimentaires frais et de qualité chez vos commerçants de proximité.</p>
             </div>
 
@@ -155,7 +162,7 @@
 
 
     <!--4ème section MAQUETTE-->
-    <section class="container-1000" id="Maquette">
+    <section class="container-1000 pt-128 pb-128" id="Maquette">
 
         <!-- Div UserFlow-->
         <div>
@@ -196,70 +203,87 @@
 
 
     <!--section Test Utilisateur-->
-    <section class="bg-section-color pb-128 pt-16 mt-32" id="Test">
+    <section class="bg-section-color pb-128 pt-128 mt-32" id="Test">
         <div class="container-1000">
             <h2 class="white text-center mb-32 mt-32 gros">Test Utilisateurs</h2>
-
-            <div class=" bg-div-color border-10 padding-16 w-50">
-                <h3 class="chiffre-bleu text-center pb-16">Évolution de l'interface</h3>
-                <p class="chiffre-bleu">Après avoir développé nos premières maquettes, nous les avons soumises à une
-                    phase de tests auprès de nos futurs utilisateurs. Cette démarche nous a permis de confronter nos
-                    idées à la réalité du terrain et de récolter de précieux retours. Découvrez ci-dessous comment nous
-                    avons transformé ces remarques en améliorations concrètes pour rendre l'application plus simple,
-                    plus sûre et plus agréable au quotidien.</p>
+            <div class="flex justify-center">
+                <div class=" bg-div-color border-10 padding-16 w-50 mb-32">
+                    <h3 class="chiffre-bleu text-center pb-16">Évolution de l'interface</h3>
+                    <p class="chiffre-bleu">Après avoir développé nos premières maquettes, nous les avons soumises à une
+                        phase de tests auprès de nos futurs utilisateurs. Cette démarche nous a permis de confronter nos
+                        idées à la réalité du terrain et de récolter de précieux retours. Découvrez ci-dessous comment
+                        nous
+                        avons transformé ces remarques en améliorations concrètes pour rendre l'application plus simple,
+                        plus sûre et plus agréable au quotidien.</p>
+                </div>
             </div>
+            <div class="flex space-between mb-32 align-center">
 
-
-
-            <div class="flex justify-center container-1000 pb-32">
-                <div class="w-30">
-
-                     <div class=" bg-div-color border-10 padding-16 w-50">
+                <div class=" bg-div-color border-10 padding-16 w-30">
                     <h3 class="chiffre-bleu text-center pb-16">Optimisation de l'écran "Détail de la mission"</h3>
-                    <p class="chiffre-bleu">La phase de test utilisateur a mis en évidence le besoin d'une validation
-                        plus rigoureuse et d'un design plus chaleureux. La version "Après" intègre désormais un QR Code
-                        de validation, sécurisant l'échange entre le bénévole et le commerce partenaire. L'interface a
+                    <p class="chiffre-bleu">La phase de test utilisateur a mis en évidence le besoin d'une
+                        validation
+                        plus rigoureuse et d'un design plus chaleureux. La version "Après" intègre désormais un QR
+                        Code
+                        de validation, sécurisant l'échange entre le bénévole et le commerce partenaire. L'interface
+                        a
                         également été épurée au niveau de la navigation basse et enrichie visuellement pour mieux
                         refléter nos valeurs de circuits courts et d'alimentation de qualité.</p>
+
                 </div>
-                    
+
+
+                <div class="w-30">
                     <h3 class="white text-center pt-16 mb-16 mt-32">Avant</h3>
                     <img class="border-15 box-shadow w-100" src="asset/3 détail mission (2).png" alt="">
                 </div>
+
+
+
+
                 <div class="w-30">
                     <h3 class="white text-center pt-16 mb-16 mt-32">Après</h3>
                     <img class="border-15 box-shadow w-100" src="asset/accepter mission v2.png" alt="">
                 </div>
-                
-             </div>
-               
 
-                    <div class=" flex space-between container-1000">
-                        
-                <div class="w-48">
+
+            </div>
+
+
+            <div class="flex space-between align-center">
+
+                <div class=" bg-div-color border-10 padding-16 w-30">
+                    <h3 class="chiffre-bleu bold text-center pb-16">Optimisation de l'interface cartographique</h3>
+                    <p class="chiffre-bleu">Afin de rendre la recherche de missions plus intuitive, nous avons
+                        retravaillé
+                        l'ergonomie de l'écran principal. La carte intègre désormais des repères visuels thématisés
+                        (commerces,
+                        points d'intérêt) et un sélecteur "Liste / Carte" pour fluidifier la navigation. La carte de
+                        prévisualisation de la mission a également été épurée : son design est plus moderne, les
+                        informations
+                        clés (adresse, temps) sont mieux hiérarchisées et l'affichage des crédits est plus valorisé pour
+                        l'utilisateur.</p>
+                </div>
+
+                <div class="w-30">
                     <h3 class="white text-center pt-16 mb-16 mt-32">Avant</h3>
                     <img class="border-15 box-shadow w-100" src="asset/1 Map V1.png" alt="">
                 </div>
-                <div class="w-48">
+
+
+
+                <div class="w-30">
                     <h3 class="white text-center pt-16 mb-16 mt-32">Après</h3>
                     <img class="border-15 box-shadow w-100" src="asset/2 Map V2.png" alt="">
 
                 </div>
 
-                     </div>
 
-            <div class=" bg-div-color border-10 padding-16 w-50">
-                <h3 class="chiffre-bleu bold text-center pb-16">Optimisation de l'interface cartographique</h3>
-                <p class="chiffre-bleu">Afin de rendre la recherche de missions plus intuitive, nous avons retravaillé
-                    l'ergonomie de l'écran principal. La carte intègre désormais des repères visuels thématisés
-                    (commerces,
-                    points d'intérêt) et un sélecteur "Liste / Carte" pour fluidifier la navigation. La carte de
-                    prévisualisation de la mission a également été épurée : son design est plus moderne, les
-                    informations
-                    clés (adresse, temps) sont mieux hiérarchisées et l'affichage des crédits est plus valorisé pour
-                    l'utilisateur.</p>
+
             </div>
-        </div>
+
+
+
     </section>
 
 
@@ -271,24 +295,27 @@
         <h2 class="text-center mb-32 gros pb-32">Elan, c'est un projet vivant</h2>
         <div class="flex space-between">
 
-            <div class="bg-section-color padding-16 w-25 box-shadow border-10">
-                <h3 class="white">Géolocalisation Intégrée</h3>
+            <div class="bg-section-color padding-16 w-30 box-shadow border-10" data-aos="flip-left"
+                data-aos-easing="ease-out-cubic" data-aos-duration="3000">
+                <h3 class="white mb-16">Géolocalisation Intégrée</h3>
                 <p class="white">À court terme, nous allons enrichir l'expérience utilisateur avec un système de
                     géolocalisation directement intégré à la carte des enseignes partenaires. L'objectif ? Permettre à
                     chacun de trouver instantanément les commerces près de chez soi et d'accéder aux missions
                     disponibles en quelques secondes.</p>
             </div>
 
-            <div class="bg-div-color padding-16 w-25 box-shadow border-10">
-                <h3 class="chiffre-bleu">Expérience Sur-Mesure</h3>
+            <div class="bg-blanc padding-16 w-30 box-shadow border-10" data-aos="flip-right"
+                data-aos-easing="ease-out-cubic" data-aos-duration="3000">
+                <h3 class="chiffre-bleu mb-16">Expérience Sur-Mesure</h3>
                 <p class="chiffre-bleu">Nous travaillons sur une personnalisation poussée pour adapter les missions et
                     les offres selon le profil de l'utilisateur, ses habitudes et sa localisation. À terme, nous
                     envisageons également d'introduire une carte physique ELAN pour faciliter encore plus les
                     interactions et les paiements chez nos partenaires.</p>
             </div>
 
-            <div class="bg-section-color padding-16 w-25 box-shadow border-10">
-                <h3 class="white">Un Réseau en Évolution</h3>
+            <div class="bg-section-color padding-16 w-30 box-shadow border-10" data-aos="flip-left"
+                data-aos-easing="ease-out-cubic" data-aos-duration="3000">
+                <h3 class="white mb-16">Un Réseau en Évolution</h3>
                 <p class="white">À plus long terme, notre ambition est d'élargir continuellement notre réseau de
                     partenaires, de proposer de nouveaux types de missions solidaires et d’ouvrir la plateforme à
                     d’autres villes pour faire d'Élan un véritable pilier de l’économie solidaire locale.</p>
@@ -333,7 +360,7 @@
             </div>
         </div>
     </footer>
-
+    <button class="bouton-retour-haut" id="bouton-retour-haut" aria-label="Retour en haut">↑</button>
 </body>
 
 </html>

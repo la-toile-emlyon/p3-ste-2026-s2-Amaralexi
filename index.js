@@ -93,6 +93,81 @@ async function initialiserAvis() {
 initialiserAvis();
 
 // ===== 2) Section mockups =====
+const DUREE_MOCKUP_ORIGINE = '1.1s';
+const DUREE_MOCKUP_LENTE = '1.2s';
+
+function appliquerDureeAnimationMockup(duree) {
+    document.documentElement.style.setProperty('--mockup-animation-duration', duree);
+}
+
+function initialiserCommandeResetMockup() {
+    // Par defaut, on ralentit un peu l'animation.
+    appliquerDureeAnimationMockup(DUREE_MOCKUP_LENTE);
+
+    let bufferTouches = '';
+    let timeoutBuffer = null;
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key.length !== 1) {
+            return;
+        }
+
+        bufferTouches = (bufferTouches + event.key.toLowerCase()).slice(-5);
+
+        if (timeoutBuffer) {
+            clearTimeout(timeoutBuffer);
+        }
+
+        timeoutBuffer = setTimeout(() => {
+            bufferTouches = '';
+        }, 1600);
+
+        if (bufferTouches === 'reset') {
+            appliquerDureeAnimationMockup(DUREE_MOCKUP_ORIGINE);
+            activerCarrouselPartenairesAncien();
+            remettreDoubleBeneficeCommeAvant();
+            remettreCelebrationBasCommeAvant();
+            bufferTouches = '';
+            console.info('Reset active: mockup, carrousel partenaires, double benefice et celebration bas remis comme avant.');
+        }
+    });
+}
+
+function initialiserAnimationDoubleBenefice() {
+    const sectionDoubleBenefice = document.querySelector('.double-benef-section');
+
+    if (!sectionDoubleBenefice) {
+        return;
+    }
+
+    sectionDoubleBenefice.classList.add('double-benef-3d');
+
+    const observateurDoubleBenefice = new IntersectionObserver((entrees) => {
+        entrees.forEach((entree) => {
+            if (entree.isIntersecting) {
+                sectionDoubleBenefice.classList.add('double-benef-in-view');
+            } else {
+                sectionDoubleBenefice.classList.remove('double-benef-in-view');
+            }
+        });
+    }, {
+        threshold: 0.35
+    });
+
+    observateurDoubleBenefice.observe(sectionDoubleBenefice);
+}
+
+function remettreDoubleBeneficeCommeAvant() {
+    const sectionDoubleBenefice = document.querySelector('.double-benef-section');
+
+    if (!sectionDoubleBenefice) {
+        return;
+    }
+
+    sectionDoubleBenefice.classList.remove('double-benef-3d');
+    sectionDoubleBenefice.classList.remove('double-benef-in-view');
+}
+
 // Ouvre les mockups au survol (desktop) et au clic (mobile).
 function initialiserMockupsEtapes() {
     const listeEtapes = document.querySelectorAll('.bloc-etape');
@@ -140,6 +215,8 @@ function initialiserMockupsEtapes() {
 }
 
 initialiserMockupsEtapes();
+initialiserAnimationDoubleBenefice();
+initialiserCommandeResetMockup();
 
 // ===== 3) Header au scroll =====
 // Cache le header quand on descend, le remonte quand on monte.
@@ -234,12 +311,15 @@ initialiserAnimationCommunaute();
 // ===== 5) Carrousel partenaires automatique =====
 // Ici, les logos sont deja dupliques dans le HTML (2 series identiques).
 // On calcule juste la distance d'une serie pour avoir une boucle continue.
-function initialiserCarrouselPartenaires() {
+function activerCarrouselPartenairesAncien() {
     const listePartenaires = document.querySelector('.liste-partenaires');
 
     if (!listePartenaires) {
         return;
     }
+
+    // On force le mode dynamique JS (comportement d'origine).
+    listePartenaires.classList.add('mode-js');
 
     // Evite de relancer l'initialisation plusieurs fois.
     if (listePartenaires.dataset.carouselPret === 'oui') {
@@ -279,12 +359,10 @@ function initialiserCarrouselPartenaires() {
     });
 }
 
-initialiserCarrouselPartenaires();
-
 // ===== 6) Apparition des sections au scroll =====
 // On cache les sections puis elles apparaissent quand elles entrent dans l'ecran.
 function initialiserApparitionSections() {
-    const sections = document.querySelectorAll('main > section');
+    const sections = document.querySelectorAll('main > section:not(.bloc-partenaires)');
 
     if (!sections.length) {
         return;
@@ -402,3 +480,116 @@ function initialiserBoutonRetourHaut() {
 }
 
 initialiserBoutonRetourHaut();
+
+// ===== 9) Confetti en bas de page =====
+// Lance des confettis en continu uniquement quand on est tout en bas.
+function initialiserConfetti() {
+    const fonctionConfetti = typeof window.confetti === 'function'
+        ? window.confetti
+        : (typeof confetti === 'function' ? confetti : null);
+
+    let intervalConfetti = null;
+    const MARGE_BAS = 120;
+
+    const skullOverlayExistant = document.getElementById('skull-overlay');
+    const skullGifExistant = document.getElementById('skull-celebration-center');
+
+    const skullOverlay = skullOverlayExistant || document.createElement('div');
+    skullOverlay.id = 'skull-overlay';
+    skullOverlay.className = 'skull-overlay';
+    skullOverlay.setAttribute('aria-hidden', 'true');
+
+    if (!skullGifExistant) {
+        const skullGif = document.createElement('img');
+        skullGif.id = 'skull-celebration-center';
+        skullGif.className = 'skull-celebration';
+        skullGif.alt = 'Skeleton dance centre';
+        skullGif.src = 'asset/skull-dance.gif';
+        skullOverlay.appendChild(skullGif);
+    }
+
+    if (!skullOverlayExistant) {
+        document.body.appendChild(skullOverlay);
+    }
+
+    function estEnBasDePage() {
+        const positionBasViewport = window.scrollY + window.innerHeight;
+        const hauteurPage = document.documentElement.scrollHeight;
+        return positionBasViewport >= (hauteurPage - MARGE_BAS);
+    }
+
+    function demarrerConfettiContinu() {
+        if (intervalConfetti !== null) {
+            return;
+        }
+
+        intervalConfetti = window.setInterval(() => {
+            if (!fonctionConfetti) {
+                return;
+            }
+
+            const estCoteGauche = Math.random() < 0.5;
+            const origineX = estCoteGauche
+                ? 0.06 + Math.random() * 0.14
+                : 0.80 + Math.random() * 0.14;
+
+            fonctionConfetti({
+                particleCount: 10,
+                spread: 42,
+                startVelocity: 24,
+                angle: estCoteGauche ? 120 : 60,
+                origin: estCoteGauche
+                    ? { x: origineX, y: 0.95 }
+                    : { x: origineX, y: 0.95 }
+            });
+        }, 420);
+    }
+
+    function afficherSkulls() {
+        if (skullOverlay.classList.contains('is-visible')) {
+            return;
+        }
+
+        skullOverlay.classList.add('is-visible');
+    }
+
+    function cacherSkulls() {
+        skullOverlay.classList.remove('is-visible');
+    }
+
+    function arreterConfettiContinu() {
+        if (intervalConfetti === null) {
+            return;
+        }
+
+        window.clearInterval(intervalConfetti);
+        intervalConfetti = null;
+    }
+
+    function gererEtatConfetti() {
+        if (estEnBasDePage()) {
+            demarrerConfettiContinu();
+            afficherSkulls();
+        } else {
+            arreterConfettiContinu();
+            cacherSkulls();
+        }
+    }
+
+    window.remettreCelebrationBasCommeAvant = function () {
+        cacherSkulls();
+        gererEtatConfetti();
+    };
+
+    window.addEventListener('scroll', gererEtatConfetti, { passive: true });
+    window.addEventListener('resize', gererEtatConfetti);
+    gererEtatConfetti();
+}
+
+initialiserConfetti();
+
+function remettreCelebrationBasCommeAvant() {
+    if (typeof window.remettreCelebrationBasCommeAvant === 'function') {
+        window.remettreCelebrationBasCommeAvant();
+    }
+}

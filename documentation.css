@@ -32,6 +32,36 @@ li {
 
 }
 
+.bouton-retour-haut {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background-color: #08295f;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(8, 41, 95, 0.28);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    z-index: 120;
+}
+
+.bouton-retour-haut.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.bouton-retour-haut:hover {
+    background-color: #0b3b87;
+}
 
 
 /* 4) header */
@@ -263,6 +293,14 @@ li {
 }
 
 
+.orange{
+    color:#FA6501;
+}
+
+.green{
+    color: #1EE13E;
+}
+
 
 .bg-section-color {
     background-color: #051F4F;
@@ -293,6 +331,10 @@ li {
 
 .bg-beige {
     background-color: beige;
+}
+
+.bg-blanc{
+    background-color: white;
 }
 
 .border-10 {
@@ -360,6 +402,10 @@ header nav a {
     width: 48%;
 }
 
+.w-35{
+    width: 35%;
+}
+
 .w-30 {
     width: 30%;
 }
@@ -394,8 +440,8 @@ header nav a {
     font-size: 40px;
 }
 
-.ft-80 {
-    font-size: 80px;
+.ft-40 {
+    font-size: 40px;
 }
 
 .ft-30 {
@@ -686,9 +732,12 @@ footer {
 }
 
 .box-shadow {
-    box-shadow: 0px 0px 30px #000000;
+    box-shadow: 0px 0px 30px #00000046;
 }
 
+.box-shadow-2 {
+    box-shadow: 0px 0px 30px #0059ff;
+}
 
 /*Bordure*/
 
