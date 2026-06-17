@@ -54,19 +54,33 @@
         </div>
     </section>
 
-        <!-- Chiffres -->
+        <!-- section Chiffres -->
         <section class="bloc-chiffres">
             <div class="ligne-chiffres">
                 <div class="chiffre-item">
-                    <p class="chiffre-valeur chiffre-bleu">3000</p>
+                    <p class="chiffre-valeur chiffre-bleu" data-cible="3000" data-suffix="">
+                        <span class="chiffre-digit">3</span>
+                        <span class="chiffre-digit">0</span>
+                        <span class="chiffre-digit">0</span>
+                        <span class="chiffre-digit">0</span>
+                    </p>
                     <p class="chiffre-texte">utilisateurs actifs</p>
                 </div>
                 <div class="chiffre-item">
-                    <p class="chiffre-valeur chiffre-vert">200</p>
+                    <p class="chiffre-valeur chiffre-vert" data-cible="200" data-suffix="">
+                        <span class="chiffre-digit">2</span>
+                        <span class="chiffre-digit">0</span>
+                        <span class="chiffre-digit">0</span>
+                    </p>
                     <p class="chiffre-texte">Commerces partenaires</p>
                 </div>
                 <div class="chiffre-item">
-                    <p class="chiffre-valeur chiffre-orange">250K</p>
+                    <p class="chiffre-valeur chiffre-orange" data-cible="250" data-suffix="K">
+                        <span class="chiffre-digit">2</span>
+                        <span class="chiffre-digit">5</span>
+                        <span class="chiffre-digit">0</span>
+                        <span class="chiffre-digit">K</span>
+                    </p>
                     <p class="chiffre-texte">Élans distribués</p>
                 </div>
             </div>
@@ -84,7 +98,7 @@
                 <div class="grille-comment">
                     <article class="bloc-etape">
                         <div class="zone-mockup">
-                            <img class="image-mockup" src="asset/Mokup_map_mission 1.png"
+                            <img class="image-mockup" src="asset/Mokup_map_mission V2.png"
                                 alt="Mission près de chez vous">
                         </div>
                         <div class="carte-etape">
@@ -212,7 +226,7 @@
         <section class="bloc-communaute">
             <div class="ligne-communaute">
                 <div class="texte-communaute">
-                    <p class="titre-communaute">Rejoindra la communauté Élan</p>
+                    <p class="titre-communaute">Rejoindre la communauté Élan</p>
                     <h2 class="grand-titre-communaute">Faisons grandir une solidarité locale qui rend service, tout de
                         suite.</h2>
                     <p class="texte-communaute-p">Élan connecte des personnes, des commerces et des besoins du
@@ -271,6 +285,11 @@
                     <img src="asset/partenaire 3.png" alt="Partenaire 3">
                     <img src="asset/partenaire 4.png" alt="Partenaire 4">
                     <img src="asset/partenaire 5.png" alt="Partenaire 5">
+                    <img src="asset/partenaire 1.png" alt="" aria-hidden="true">
+                    <img src="asset/partenaire 2.png" alt="" aria-hidden="true">
+                    <img src="asset/partenaire 3.png" alt="" aria-hidden="true">
+                    <img src="asset/partenaire 4.png" alt="" aria-hidden="true">
+                    <img src="asset/partenaire 5.png" alt="" aria-hidden="true">
                 </div>
 
                 <button class="bouton-partenaire">Devenir partenaire</button>
@@ -308,6 +327,8 @@
                 </div>
             </div>
         </footer>
+
+        <button class="bouton-retour-haut" id="bouton-retour-haut" aria-label="Retour en haut">↑</button>
 
     </main>
 </body>

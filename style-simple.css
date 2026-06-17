@@ -9,12 +9,56 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f5f5f5;
     color: #292f3a;
+    overflow-x: hidden;
+}
+
+.section-cachee {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.bouton-retour-haut {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background-color: #08295f;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(8, 41, 95, 0.28);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    z-index: 120;
+}
+
+.bouton-retour-haut.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.bouton-retour-haut:hover {
+    background-color: #0b3b87;
 }
 
 a {
@@ -22,7 +66,12 @@ a {
     color: inherit;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: #08295f;
 }
 
@@ -51,13 +100,16 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 4) header */
 .header {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    width: 100%;
     z-index: 100;
     background-color: #efeff2;
     padding: 16px 0;
-    /* Animation douce quand le header monte ou descend */
-    transition: transform 0.3s ease;
+    /* Animation plus douce quand le header monte ou descend */
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
 }
 
 .header.header-hidden {
@@ -176,7 +228,7 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 12px 24px rgba(8, 41, 95, 0.2);
 }
 
-.bloc-store > p {
+.bloc-store>p {
     margin: 0;
     color: #ffffff;
     font-size: 16px;
@@ -222,6 +274,20 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 800px;
     display: block;
     object-fit: contain;
+    animation: flottement-hero 4.8s ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes flottement-hero {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 /* 6) Chiffres */
@@ -247,6 +313,43 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 48px;
     font-weight: 800;
     margin-bottom: 8px;
+    display: inline-flex;
+    justify-content: center;
+    gap: 2px;
+    will-change: transform;
+}
+
+.chiffre-digit {
+    display: inline-block;
+    animation: flottement-chiffre 2.8s ease-in-out infinite;
+    will-change: transform;
+}
+
+.chiffre-digit:nth-child(2) {
+    animation-delay: 0.14s;
+    animation-duration: 3.1s;
+}
+
+.chiffre-digit:nth-child(3) {
+    animation-delay: 0.28s;
+    animation-duration: 3.4s;
+}
+
+.chiffre-digit:nth-child(4) {
+    animation-delay: 0.42s;
+    animation-duration: 3s;
+}
+
+@keyframes flottement-chiffre {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-11px) rotate(-2deg) scale(1.04);
+    }
 }
 
 .chiffre-texte {
@@ -254,9 +357,17 @@ h1, h2, h3, h4, h5, h6 {
     color: #2f333a;
 }
 
-.chiffre-bleu  { color: #08295f; }
-.chiffre-vert { color: #2acb3f; }
-.chiffre-orange { color: #f78300; }
+.chiffre-bleu {
+    color: #08295f;
+}
+
+.chiffre-vert {
+    color: #2acb3f;
+}
+
+.chiffre-orange {
+    color: #f78300;
+}
 
 /* 7) Comment ca marche */
 .bloc-comment {
@@ -297,7 +408,7 @@ h1, h2, h3, h4, h5, h6 {
     color: rgba(255, 255, 255, 0.92);
     font-size: 18px;
     line-height: 1.45;
-    margin-bottom: 36px;
+    margin-bottom: 100px;
     position: relative;
     z-index: 1;
 }
@@ -315,7 +426,7 @@ h1, h2, h3, h4, h5, h6 {
     flex: 1;
     min-width: 0;
     position: relative;
-    top: -40px;
+    top: 0;
     overflow: visible;
 }
 
@@ -355,12 +466,43 @@ h1, h2, h3, h4, h5, h6 {
 
 .zone-mockup:hover .image-mockup,
 .bloc-etape.is-open .image-mockup {
-    /* Au survol/clic: le mockup remonte */
-    transform: translateY(-12px);
+    /* Le mockup monte, passe devant la carte puis redescend au milieu */
+    animation: mockup-avant-et-milieu 1.1s cubic-bezier(0.2, 0.85, 0.22, 1) forwards;
 }
 
 .bloc-etape.is-open .zone-mockup {
     z-index: 20;
+}
+
+@keyframes mockup-avant-et-milieu {
+
+    0% {
+        transform: translateY(370px);
+    }
+
+    58% {
+        transform: translateY(-12px);
+    }
+
+    100% {
+        transform: translateY(300px);
+    }
+}
+
+.carte-etape .haut-carte,
+.carte-etape h3,
+.carte-etape p {
+    transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.zone-mockup:hover+.carte-etape .haut-carte,
+.zone-mockup:hover+.carte-etape h3,
+.zone-mockup:hover+.carte-etape p,
+.bloc-etape.is-open .carte-etape .haut-carte,
+.bloc-etape.is-open .carte-etape h3,
+.bloc-etape.is-open .carte-etape p {
+    opacity: 0;
+    transform: translateY(8px);
 }
 
 .carte-etape {
@@ -369,7 +511,7 @@ h1, h2, h3, h4, h5, h6 {
     border: 1px solid #cfd4df;
     box-shadow: 0 10px 18px rgba(1, 10, 32, 0.34);
     padding: 14px 12px 14px;
-    margin-top: -8px;
+    margin-top: 0;
     position: relative;
     z-index: 1;
 }
@@ -578,7 +720,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #ffffff;
 }
 
-.gauche-avis > p:last-child {
+.gauche-avis>p:last-child {
     font-size: 18px;
     line-height: 1.45;
     color: rgba(255, 255, 255, 0.92);
@@ -762,6 +904,28 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
 }
 
+/* Animation au scroll (section communaute) */
+.anim-gauche,
+.anim-droite {
+    opacity: 0;
+    transition: transform 1.05s ease, opacity 1.05s ease;
+    will-change: transform, opacity;
+}
+
+.anim-gauche {
+    transform: translateX(-70px);
+}
+
+.anim-droite {
+    transform: translateX(70px);
+}
+
+.anim-gauche.visible,
+.anim-droite.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 .image-communaute img {
     max-width: 100%;
     height: auto;
@@ -821,15 +985,17 @@ h1, h2, h3, h4, h5, h6 {
 .bloc-partenaires {
     width: 100%;
     background-color: #eeeff2;
-    padding: 44px 40px 32px;
+    padding: 44px 0 32px;
 }
 
 .contenu-partenaires {
-    max-width: 1180px;
+    max-width: none;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
 }
 
 .titre-partenaires {
@@ -842,17 +1008,34 @@ h1, h2, h3, h4, h5, h6 {
 .liste-partenaires {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 18px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 28px;
     margin-bottom: 24px;
+    width: max-content;
+    --defilement-distance: 0px;
 }
 
 .liste-partenaires img {
-    height: 82px;
-    width: auto;
+    width: 210px;
+    height: 110px;
     object-fit: contain;
     display: block;
+    flex: 0 0 auto;
+}
+
+.liste-partenaires.is-carousel {
+    animation: defilement-partenaires 18s linear infinite;
+}
+
+@keyframes defilement-partenaires {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(calc(-1 * var(--defilement-distance)));
+    }
 }
 
 .bouton-partenaire {
@@ -1012,7 +1195,7 @@ h1, h2, h3, h4, h5, h6 {
 
     .texte-comment {
         font-size: 17px;
-        margin-bottom: 22px;
+        margin-bottom: 34px;
     }
 
     .grille-comment {
@@ -1157,7 +1340,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .bloc-partenaires {
-        padding: 34px 20px 26px;
+        padding: 34px 0 26px;
     }
 
     .titre-partenaires {
@@ -1167,12 +1350,13 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .liste-partenaires {
-        gap: 14px;
+        gap: 20px;
         margin-bottom: 18px;
     }
 
     .liste-partenaires img {
-        height: 68px;
+        width: 160px;
+        height: 88px;
     }
 
     .bouton-partenaire {
@@ -1216,6 +1400,14 @@ h1, h2, h3, h4, h5, h6 {
         flex-direction: row;
         gap: 10px;
         flex-wrap: wrap;
+    }
+
+    .bouton-retour-haut {
+        right: 16px;
+        bottom: 16px;
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
     }
 
     .footer-stores .lien-store img {
