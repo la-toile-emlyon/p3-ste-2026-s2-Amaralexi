@@ -5,6 +5,12 @@ html {
     scroll-behavior: smooth;
 }
 
+body {
+    transition: padding-top 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+section{
+    scroll-margin-top: 40px;
+}
 :root {
     --header-height: 0px;
     --header-offset: 0px;
@@ -74,7 +80,7 @@ li {
     background-color: #efeff2;
     padding: 16px 0;
     /* Animation plus douce quand le header monte ou descend */
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.78s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform;
 }
 
@@ -208,8 +214,8 @@ li {
 }
 
 .logo-pied-page img {
-    width: 170px;
-    height: 170px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
     display: block;
 }
@@ -726,13 +732,209 @@ header nav a {
     width: 100%;
 }
 
-/*card*/
+.sommaire-documentation nav {
+    padding: 14px 22px;
+    gap: 14px 18px;
+    justify-content: center;
+}
 
-.card {
-    width: 30%;
-    text-align: center;
-    padding: 8px;
-    border-radius: 10px
+.sommaire-documentation nav p {
+    font-size: 18px;
+}
+
+.sommaire-documentation nav a {
+    font-size: 15px;
+}
+
+@media (max-width: 900px) {
+    .sommaire-documentation nav {
+        padding: 10px 14px;
+        gap: 10px 14px;
+    }
+
+    .sommaire-documentation nav p {
+        font-size: 16px;
+    }
+
+    .sommaire-documentation nav a {
+        font-size: 14px;
+    }
+}
+
+/* Animations section equipe */
+#équipe .team-card {
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    transform-origin: center bottom;
+}
+
+#équipe .team-card img {
+    transition: filter 0.28s ease;
+    transform-origin: center bottom;
+}
+
+#équipe .surnom-equipe {
+    display: inline-block;
+    position: relative;
+    transition: transform 0.25s ease, color 0.25s ease, letter-spacing 0.25s ease;
+}
+
+#équipe .team-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 30px rgba(8, 41, 95, 0.2);
+}
+
+/* Animations équipe - identique et stylée pour tous */
+#équipe .team-card:hover {
+    animation: team-card-lift 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#équipe .team-card:hover img {
+    animation: team-image-shine 1s ease-in-out;
+}
+
+#équipe .team-card:hover .surnom-equipe {
+    animation: team-name-pop 1s ease-in-out;
+}
+
+@keyframes team-card-lift {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 16px 30px rgba(8, 41, 95, 0.2);
+    }
+
+    50% {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 24px 40px rgba(8, 41, 95, 0.3);
+    }
+}
+
+@keyframes team-image-shine {
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    25% {
+        transform: scale(1.08) rotate(-2deg);
+    }
+
+    50% {
+        transform: scale(1.12) rotate(0deg);
+    }
+
+    75% {
+        transform: scale(1.08) rotate(2deg);
+    }
+}
+
+@keyframes team-name-pop {
+    0%,
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.1) translateY(-3px);
+        opacity: 0.95;
+    }
+}
+
+@keyframes team-card-lift {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 16px 30px rgba(8, 41, 95, 0.2);
+    }
+
+    50% {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 24px 40px rgba(8, 41, 95, 0.3);
+    }
+}
+
+@keyframes team-image-shine {
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    25% {
+        transform: scale(1.08) rotate(-2deg);
+    }
+
+    50% {
+        transform: scale(1.12) rotate(0deg);
+    }
+
+    75% {
+        transform: scale(1.08) rotate(2deg);
+    }
+}
+
+@keyframes team-name-pop {
+    0%,
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.1) translateY(-3px);
+        opacity: 0.95;
+    }
+}
+
+@keyframes pointilleux-micro-ajustements {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    20% {
+        transform: translate(-1px, -2px);
+    }
+
+    40% {
+        transform: translate(1px, -1px);
+    }
+
+    60% {
+        transform: translate(-1px, 0);
+    }
+
+    80% {
+        transform: translate(1px, -1px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #équipe .team-card,
+    #équipe .team-card img,
+    #équipe .surnom-equipe,
+    #équipe .surnom-equipe::after {
+        transition: none;
+        animation: none;
+    }
+}
+
+/* Chiffres cercles pour Comment et Nos Services */
+.numero-chiffre {
+    width: 48px;
+    height: 48px;
+    border: 2px solid rgba(8, 41, 95, 0.65);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    color: rgba(8, 41, 95, 0.7);
+    flex-shrink: 0;
 }
 
 /*formulaire*/

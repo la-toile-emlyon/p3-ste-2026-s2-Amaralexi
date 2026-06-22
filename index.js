@@ -223,6 +223,8 @@ function initialiserHeaderAuScroll() {
     const entete = document.querySelector('.header');
     const racineDocument = document.documentElement;
     const blocSommaireDocumentation = document.querySelector('.sommaire-documentation');
+    const SEUIL_HAUT_PAGE = 10;
+    const SEUIL_MOUVEMENT_SCROLL = 10;
 
     if (!entete) {
         return;
@@ -231,9 +233,13 @@ function initialiserHeaderAuScroll() {
     function ajusterEspaceHeader(estVisible) {
         const hauteurHeader = entete.offsetHeight;
         const hauteurSommaire = blocSommaireDocumentation ? blocSommaireDocumentation.offsetHeight : 0;
+        const positionHeader = window.getComputedStyle(entete).position;
+        const headerEstFixe = positionHeader === 'fixed';
 
-        // Si le header est cache, on ne garde plus son espace en haut.
-        const espaceHaut = (estVisible ? hauteurHeader : 0) + hauteurSommaire;
+        // Avec un header sticky, il ne faut pas ajouter son espace dans le body,
+        // sinon cela cree un vide inutile en haut de page.
+        const espaceHeaderReserve = headerEstFixe ? (estVisible ? hauteurHeader : 0) : 0;
+        const espaceHaut = espaceHeaderReserve + hauteurSommaire;
 
         document.body.style.paddingTop = `${espaceHaut}px`;
         racineDocument.style.setProperty('--header-height', `${entete.offsetHeight}px`);
@@ -245,29 +251,62 @@ function initialiserHeaderAuScroll() {
     entete.classList.remove('header-hidden');
     ajusterEspaceHeader(true);
 
+    let dernierePositionY = window.scrollY;
+
     window.addEventListener('resize', () => {
         const headerVisible = !entete.classList.contains('header-hidden');
         ajusterEspaceHeader(headerVisible);
     });
 
     window.addEventListener('scroll', () => {
-        const scrollActuelY = window.scrollY;
+        const scrollActuelY = Math.max(0, window.scrollY);
+        const variationScroll = scrollActuelY - dernierePositionY;
 
-        // Regle simple demandee:
-        // - en haut de page: header visible
-        // - sinon: header cache
-        if (scrollActuelY <= 10) {
+        if (scrollActuelY <= SEUIL_HAUT_PAGE) {
             entete.classList.remove('header-hidden');
             ajusterEspaceHeader(true);
+            dernierePositionY = scrollActuelY;
             return;
         }
 
-        entete.classList.add('header-hidden');
-        ajusterEspaceHeader(false);
+        // Evite les micro variations qui provoquent des clignotements.
+        if (Math.abs(variationScroll) < SEUIL_MOUVEMENT_SCROLL) {
+            dernierePositionY = scrollActuelY;
+            return;
+        }
+
+        if (variationScroll > 0) {
+            // On descend: on cache le header.
+            entete.classList.add('header-hidden');
+            ajusterEspaceHeader(false);
+        } else {
+            // On remonte: le header reapparait tout de suite.
+            entete.classList.remove('header-hidden');
+            ajusterEspaceHeader(true);
+        }
+
+        dernierePositionY = scrollActuelY;
     }, { passive: true });
 }
 
 initialiserHeaderAuScroll();
+
+/*
+function testheader(){
+    const h = document.querySelector('.header');
+    document.addEventListener('mousewheel', (e) => {
+        console.log(e.deltaY);
+        if(e.deltaY < 0) {
+            h.classList.remove('header-hidden');
+        }else{
+            h.classList.add('header-hidden');
+        }
+
+    })
+
+}
+testheader();
+*/
 
 // ===== 4) Animation section communaute au scroll =====
 // Quand la section arrive a l'ecran:
@@ -307,7 +346,35 @@ function initialiserAnimationCommunaute() {
 
 initialiserAnimationCommunaute();
 
-// ===== 5) Carrousel partenaires automatique =====
+// ===== 4b) Animation section double benefice au scroll =====
+// Utilise la meme animation que communaute : gauche/droite
+function initialiserAnimationDoubleBenefice() {
+    const sectionDoubleBenef = document.querySelector('.benefits-grid.anim-double-benef');
+    const cardUsers = document.querySelector('.benefit-users.anim-gauche');
+    const cardShops = document.querySelector('.benefit-shops.anim-droite');
+
+    if (!sectionDoubleBenef || !cardUsers || !cardShops) {
+        return;
+    }
+
+    const observateur = new IntersectionObserver((entrees) => {
+        entrees.forEach((entree) => {
+            if (entree.isIntersecting) {
+                cardUsers.classList.add('visible');
+                cardShops.classList.add('visible');
+            } else {
+                cardUsers.classList.remove('visible');
+                cardShops.classList.remove('visible');
+            }
+        });
+    }, {
+        threshold: 0.25
+    });
+
+    observateur.observe(sectionDoubleBenef);
+}
+
+initialiserAnimationDoubleBenefice();
 // Ici, les logos sont deja dupliques dans le HTML (2 series identiques).
 // On calcule juste la distance d'une serie pour avoir une boucle continue.
 function activerCarrouselPartenairesAncien() {

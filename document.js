@@ -17,6 +17,7 @@ function initialiserBoutonRetourHaut() {
         }
     }, { passive: true });
 
+    
     boutonRetourHaut.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
