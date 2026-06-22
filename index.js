@@ -126,9 +126,8 @@ function initialiserCommandeResetMockup() {
             appliquerDureeAnimationMockup(DUREE_MOCKUP_ORIGINE);
             activerCarrouselPartenairesAncien();
             remettreDoubleBeneficeCommeAvant();
-            remettreCelebrationBasCommeAvant();
             bufferTouches = '';
-            console.info('Reset active: mockup, carrousel partenaires, double benefice et celebration bas remis comme avant.');
+            console.info('Reset active: mockup, carrousel partenaires et double benefice remis comme avant.');
         }
     });
 }
@@ -480,116 +479,3 @@ function initialiserBoutonRetourHaut() {
 }
 
 initialiserBoutonRetourHaut();
-
-// ===== 9) Confetti en bas de page =====
-// Lance des confettis en continu uniquement quand on est tout en bas.
-function initialiserConfetti() {
-    const fonctionConfetti = typeof window.confetti === 'function'
-        ? window.confetti
-        : (typeof confetti === 'function' ? confetti : null);
-
-    let intervalConfetti = null;
-    const MARGE_BAS = 120;
-
-    const skullOverlayExistant = document.getElementById('skull-overlay');
-    const skullGifExistant = document.getElementById('skull-celebration-center');
-
-    const skullOverlay = skullOverlayExistant || document.createElement('div');
-    skullOverlay.id = 'skull-overlay';
-    skullOverlay.className = 'skull-overlay';
-    skullOverlay.setAttribute('aria-hidden', 'true');
-
-    if (!skullGifExistant) {
-        const skullGif = document.createElement('img');
-        skullGif.id = 'skull-celebration-center';
-        skullGif.className = 'skull-celebration';
-        skullGif.alt = 'Skeleton dance centre';
-        skullGif.src = 'asset/skull-dance.gif';
-        skullOverlay.appendChild(skullGif);
-    }
-
-    if (!skullOverlayExistant) {
-        document.body.appendChild(skullOverlay);
-    }
-
-    function estEnBasDePage() {
-        const positionBasViewport = window.scrollY + window.innerHeight;
-        const hauteurPage = document.documentElement.scrollHeight;
-        return positionBasViewport >= (hauteurPage - MARGE_BAS);
-    }
-
-    function demarrerConfettiContinu() {
-        if (intervalConfetti !== null) {
-            return;
-        }
-
-        intervalConfetti = window.setInterval(() => {
-            if (!fonctionConfetti) {
-                return;
-            }
-
-            const estCoteGauche = Math.random() < 0.5;
-            const origineX = estCoteGauche
-                ? 0.06 + Math.random() * 0.14
-                : 0.80 + Math.random() * 0.14;
-
-            fonctionConfetti({
-                particleCount: 10,
-                spread: 42,
-                startVelocity: 24,
-                angle: estCoteGauche ? 120 : 60,
-                origin: estCoteGauche
-                    ? { x: origineX, y: 0.95 }
-                    : { x: origineX, y: 0.95 }
-            });
-        }, 420);
-    }
-
-    function afficherSkulls() {
-        if (skullOverlay.classList.contains('is-visible')) {
-            return;
-        }
-
-        skullOverlay.classList.add('is-visible');
-    }
-
-    function cacherSkulls() {
-        skullOverlay.classList.remove('is-visible');
-    }
-
-    function arreterConfettiContinu() {
-        if (intervalConfetti === null) {
-            return;
-        }
-
-        window.clearInterval(intervalConfetti);
-        intervalConfetti = null;
-    }
-
-    function gererEtatConfetti() {
-        if (estEnBasDePage()) {
-            demarrerConfettiContinu();
-            afficherSkulls();
-        } else {
-            arreterConfettiContinu();
-            cacherSkulls();
-        }
-    }
-
-    window.remettreCelebrationBasCommeAvant = function () {
-        cacherSkulls();
-        gererEtatConfetti();
-    };
-
-    window.addEventListener('scroll', gererEtatConfetti, { passive: true });
-    window.addEventListener('resize', gererEtatConfetti);
-    gererEtatConfetti();
-}
-
-initialiserConfetti();
-
-function remettreCelebrationBasCommeAvant() {
-    if (typeof window.remettreCelebrationBasCommeAvant === 'function') {
-        window.remettreCelebrationBasCommeAvant();
-    }
-}

@@ -30,57 +30,6 @@ body {
     transform: translateY(0);
 }
 
-.skull-overlay {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: calc(22px + env(safe-area-inset-bottom));
-    z-index: 2147483647;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.35s ease, visibility 0.35s ease;
-}
-
-.skull-overlay.is-visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-.skull-celebration {
-    width: 120px;
-    height: auto;
-    transform: translateY(24px) scale(0.92);
-    transition: transform 0.35s ease;
-    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
-}
-
-.skull-overlay.is-visible .skull-celebration {
-    transform: translateY(0) scale(1);
-}
-
-.skull-fallback {
-    background-color: rgba(8, 41, 95, 0.92);
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    border-radius: 999px;
-    padding: 8px 14px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.28);
-    transform: translateY(14px);
-    transition: transform 0.35s ease, opacity 0.35s ease;
-    opacity: 0.92;
-}
-
-.skull-overlay.is-visible .skull-fallback {
-    transform: translateY(0);
-}
-
 .bouton-retour-haut {
     position: fixed;
     right: 24px;
@@ -273,15 +222,16 @@ h6 {
     gap: 14px;
     width: fit-content;
     max-width: 100%;
-    background-color: #08295f;
+    background-color: transparent;
+    border: 2px solid #08295f;
     border-radius: 14px;
     padding: 14px 16px;
-    box-shadow: 0 12px 24px rgba(8, 41, 95, 0.2);
+    box-shadow: none;
 }
 
 .bloc-store>p {
     margin: 0;
-    color: #ffffff;
+    color: #08295f;
     font-size: 16px;
     font-weight: 700;
     line-height: 1.3;
@@ -451,7 +401,7 @@ h6 {
     line-height: 1.12;
     margin-bottom: 14px;
     position: relative;
-    z-index: 1;
+    z-index: 6;
 }
 
 .texte-comment {
@@ -461,15 +411,15 @@ h6 {
     line-height: 1.45;
     margin-bottom: 100px;
     position: relative;
-    z-index: 1;
+    z-index: 6;
 }
 
 .grille-comment {
     display: flex;
     gap: 22px;
-    align-items: flex-start;
+    align-items: stretch;
     position: relative;
-    z-index: 4;
+    z-index: 2;
     overflow: visible;
 }
 
@@ -479,81 +429,47 @@ h6 {
     position: relative;
     top: 0;
     overflow: visible;
+    display: flex;
+    flex-direction: column;
 }
 
 .zone-mockup {
     width: 100%;
     max-width: 320px;
-    margin: 0 auto;
-    height: 278px;
+    margin: 0 auto -128px;
+    height: 340px;
     position: relative;
     z-index: 1;
-    /* On coupe l'image pour ne montrer qu'un bout au repos */
     overflow: hidden;
-    transition: z-index 0.5s ease;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 .image-mockup {
     display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
     width: 100%;
-    /* Position de depart: presque cache derriere la carte */
-    transform: translateY(370px);
+    max-width: 320px;
+    margin: 0 auto;
+    transform: translateY(0) scale(1);
+    transform-origin: center bottom;
     opacity: 1;
     clip-path: inset(0 0 0 0 round 30px);
-    transition: transform 0.45s ease;
-    z-index: 6;
-}
-
-/* Le mockup reste cache en bas et il monte au survol/clic */
-
-.zone-mockup:hover {
-    overflow: visible;
-    z-index: 4;
+    transition: transform 0.28s ease;
+    z-index: 1;
 }
 
 .zone-mockup:hover .image-mockup,
 .bloc-etape.is-open .image-mockup {
-    /* Le mockup monte, passe devant la carte puis redescend au milieu */
-    animation: mockup-avant-et-milieu var(--mockup-animation-duration, 1.1s) cubic-bezier(0.2, 0.85, 0.22, 1) forwards;
+    transform: translateY(-12px) scale(1.02);
 }
 
 .bloc-etape.is-open .zone-mockup {
-    z-index: 20;
-}
-
-@keyframes mockup-avant-et-milieu {
-
-    0% {
-        transform: translateY(370px);
-    }
-
-    58% {
-        transform: translateY(-12px);
-    }
-
-    100% {
-        transform: translateY(300px);
-    }
-}
-
-.carte-etape .haut-carte,
-.carte-etape h3,
-.carte-etape p {
-    transition: opacity 0.28s ease, transform 0.28s ease;
-}
-
-.zone-mockup:hover+.carte-etape .haut-carte,
-.zone-mockup:hover+.carte-etape h3,
-.zone-mockup:hover+.carte-etape p,
-.bloc-etape.is-open .carte-etape .haut-carte,
-.bloc-etape.is-open .carte-etape h3,
-.bloc-etape.is-open .carte-etape p {
-    opacity: 0;
-    transform: translateY(8px);
+    z-index: 1;
 }
 
 .carte-etape {
@@ -561,17 +477,20 @@ h6 {
     border-radius: 14px;
     border: 1px solid #cfd4df;
     box-shadow: 0 10px 18px rgba(1, 10, 32, 0.34);
-    padding: 14px 12px 14px;
+    padding: 12px 11px;
     margin-top: 0;
     position: relative;
-    z-index: 1;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .haut-carte {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .numero-etape {
@@ -601,15 +520,18 @@ h6 {
 
 .carte-etape h3 {
     color: #08295f;
-    font-size: 27px;
+    font-size: 22px;
     line-height: 1.2;
-    margin-bottom: 9px;
+    margin-bottom: 7px;
+    min-height: 54px;
 }
 
 .carte-etape p {
     color: #2f4367;
-    font-size: 16px;
-    line-height: 1.45;
+    font-size: 15px;
+    line-height: 1.4;
+    margin: 0;
+    text-align: left;
 }
 
 /* 8) Double benefice */
@@ -1318,13 +1240,14 @@ h6 {
         bottom: auto;
         max-width: 280px;
         clip-path: inset(0 0 0 0 round 28px);
-        transform: translateY(0px);
+        transform: translateY(0);
     }
 
     .zone-mockup {
         max-width: 280px;
-        height: auto;
-        overflow: visible;
+        height: 290px;
+        overflow: hidden;
+        margin-bottom: -102px;
     }
 
     .benefits-grid {
@@ -1338,11 +1261,16 @@ h6 {
     }
 
     .carte-etape {
-        margin-top: -20px;
+        margin-top: 0;
     }
 
     .carte-etape h3 {
-        font-size: 25px;
+        font-size: 21px;
+        min-height: auto;
+    }
+
+    .carte-etape p {
+        font-size: 15px;
     }
 
     .ligne-avis {
