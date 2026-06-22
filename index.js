@@ -15,7 +15,7 @@ const DELAI_CHANGEMENT_AVIS = 5000;
 const DELAI_ANIMATION_AVIS = 450;
 
 const AVATAR_PAR_DEFAUT = 'asset/photo hugo.png';
-const IMAGE_ETOILES = 'asset/⭐⭐⭐⭐⭐.png';
+const IMAGE_ETOILES = 'asset/etoiles.png';
 
 // Affiche un avis dans la carte.
 function afficherAvis(avis) {
@@ -214,7 +214,7 @@ function initialiserMockupsEtapes() {
 }
 
 initialiserMockupsEtapes();
-initialiserAnimationDoubleBenefice();
+// initialiserAnimationDoubleBenefice();  // Animation désactivée
 initialiserCommandeResetMockup();
 
 // ===== 3) Header au scroll =====
@@ -479,3 +479,4 @@ function initialiserBoutonRetourHaut() {
 }
 
 initialiserBoutonRetourHaut();
+

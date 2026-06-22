@@ -19,6 +19,16 @@ body {
     overflow-x: hidden;
 }
 
+
+.orange{
+    color:#FA6501;
+}
+
+.bold {
+    font-weight: 800;
+    /* mettre en gras */
+}
+
 .section-cachee {
     opacity: 0;
     transform: translateY(22px);
@@ -363,7 +373,7 @@ h6 {
 }
 
 .chiffre-vert {
-    color: #2acb3f;
+    color: #27df45;
 }
 
 .chiffre-orange {
@@ -401,7 +411,7 @@ h6 {
     line-height: 1.12;
     margin-bottom: 14px;
     position: relative;
-    z-index: 6;
+    z-index: 1;
 }
 
 .texte-comment {
@@ -411,15 +421,15 @@ h6 {
     line-height: 1.45;
     margin-bottom: 100px;
     position: relative;
-    z-index: 6;
+    z-index: 1;
 }
 
 .grille-comment {
     display: flex;
     gap: 22px;
-    align-items: stretch;
+    align-items: flex-start;
     position: relative;
-    z-index: 2;
+    z-index: 4;
     overflow: visible;
 }
 
@@ -429,47 +439,56 @@ h6 {
     position: relative;
     top: 0;
     overflow: visible;
-    display: flex;
-    flex-direction: column;
 }
 
 .zone-mockup {
     width: 100%;
     max-width: 320px;
-    margin: 0 auto -128px;
-    height: 340px;
+    margin: 0 auto;
+    height: 278px;
     position: relative;
     z-index: 1;
+    /* On coupe l'image pour ne montrer qu'un bout au repos */
     overflow: hidden;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    transition: z-index 0.5s ease;
 }
 
 .image-mockup {
     display: block;
-    position: relative;
-    left: auto;
-    right: auto;
-    bottom: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
-    transform: translateY(0) scale(1);
-    transform-origin: center bottom;
+    /* Position de depart: presque cache derriere la carte */
+    transform: translateY(420px);
     opacity: 1;
-    clip-path: inset(0 0 0 0 round 30px);
-    transition: transform 0.28s ease;
-    z-index: 1;
+    clip-path: inset(0 0 40% 0 round 30px);
+    transition: transform 0.45s ease;
+    z-index: 0;
+}
+
+/* Le mockup reste cache en bas et il monte au survol/clic */
+
+.zone-mockup:hover {
+    overflow: visible;
+    z-index: 0;
 }
 
 .zone-mockup:hover .image-mockup,
 .bloc-etape.is-open .image-mockup {
-    transform: translateY(-12px) scale(1.02);
+    /* Le mockup se leve legerement */
+    transform: translateY(340px);
 }
 
 .bloc-etape.is-open .zone-mockup {
-    z-index: 1;
+    z-index: 0;
+}
+
+.carte-etape .haut-carte,
+.carte-etape h3,
+.carte-etape p {
+    transition: opacity 0.28s ease, transform 0.28s ease;
 }
 
 .carte-etape {
@@ -477,20 +496,17 @@ h6 {
     border-radius: 14px;
     border: 1px solid #cfd4df;
     box-shadow: 0 10px 18px rgba(1, 10, 32, 0.34);
-    padding: 12px 11px;
+    padding: 14px 12px 14px;
     margin-top: 0;
     position: relative;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    z-index: 1;
 }
 
 .haut-carte {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .numero-etape {
@@ -520,18 +536,15 @@ h6 {
 
 .carte-etape h3 {
     color: #08295f;
-    font-size: 22px;
+    font-size: 27px;
     line-height: 1.2;
-    margin-bottom: 7px;
-    min-height: 54px;
+    margin-bottom: 9px;
 }
 
 .carte-etape p {
     color: #2f4367;
-    font-size: 15px;
-    line-height: 1.4;
-    margin: 0;
-    text-align: left;
+    font-size: 16px;
+    line-height: 1.45;
 }
 
 /* 8) Double benefice */
@@ -893,19 +906,20 @@ h6 {
 }
 
 .bouton-vert {
-    background-color: #27df45;
-    color: #ffffff;
-    border: none;
+    background-color: #ffffff;
+    color: #f78300;
+    border: 2px solid #f78300;
     padding: 14px 28px;
     border-radius: 6px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .bouton-vert:hover {
-    background-color: #22c237;
+    background-color: #f78300;
+    color: #ffffff;
 }
 
 .image-communaute {
@@ -1065,8 +1079,8 @@ h6 {
 }
 
 .bouton-partenaire {
-    background-color: #27df45;
-    color: #08295f;
+    background-color: #f78300;
+    color: #ffffff;
     border: none;
     border-radius: 8px;
     padding: 12px 34px;
@@ -1077,7 +1091,7 @@ h6 {
 }
 
 .bouton-partenaire:hover {
-    background-color: #1fc438;
+    background-color: #e67a00;
     transform: translateY(-1px);
 }
 
@@ -1141,8 +1155,8 @@ h6 {
 }
 
 .logo-pied-page img {
-    width: 170px;
-    height: 170px;
+    width: 80px;
+    height: 80px;
     object-fit: contain;
     display: block;
 }
@@ -1234,20 +1248,19 @@ h6 {
     }
 
     .image-mockup {
-        position: relative;
-        left: auto;
-        right: auto;
-        bottom: auto;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
         max-width: 280px;
         clip-path: inset(0 0 0 0 round 28px);
-        transform: translateY(0);
     }
 
     .zone-mockup {
         max-width: 280px;
         height: 290px;
         overflow: hidden;
-        margin-bottom: -102px;
+        margin: 0 auto;
     }
 
     .benefits-grid {
