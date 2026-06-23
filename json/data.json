@@ -6,7 +6,7 @@
       "age": 31,
       "rating": 5,
       "quoteColor": "green",
-      "text": "Une application intuitive et originale. J'apprecie la flexibilite des missions et le fait de pouvoir depenser mes credits dans des commerces locaux.",
+      "text": "Une application intuitive et originale. J'apprécie la flexibilité des missions et le fait de pouvoir dépenser mes crédits dans des commerces locaux.",
       "avatar": "asset/photo claire.png"
     },
     {
@@ -15,7 +15,7 @@
       "age": 19,
       "rating": 5,
       "quoteColor": "orange",
-      "text": "J'adore le concept. Je realise quelques missions pres de chez moi et j'utilise mes credits dans ma boulangerie preferee. C'est simple, rapide et utile.",
+      "text": "J'adore le concept. Je réalise quelques missions près de chez moi et j'utilise mes crédits dans ma boulangerie préférée. C'est simple, rapide et utile.",
       "avatar": "asset/photo emma.png"
     },
     {
@@ -24,7 +24,7 @@
       "age": 53,
       "rating": 5,
       "quoteColor": "green",
-      "text": "Avec Elan, j'ai l'impression de faire quelque chose d'utile. Je donne un coup de main pres de chez moi et je suis recompense en retour. Tout le monde y gagne.",
+      "text": "Avec Elan, j'ai l'impression de faire quelque chose d'utile. Je donne un coup de main près de chez moi et je suis récompensé en retour. Tout le monde y gagne.",
       "avatar": "asset/photo alain.png"
     },
     {
@@ -33,7 +33,7 @@
       "age": 25,
       "rating": 5,
       "quoteColor": "orange",
-      "text": "Elan m'a permis de gagner des recompenses tout en aidant des commercants de mon quartier. C'est motivant de voir que chaque mission a un impact reel.",
+      "text": "Elan m'a permis de gagner des récompenses tout en aidant des commerçants de mon quartier. C'est motivant de voir que chaque mission a un impact réel.",
       "avatar": "asset/photo hugo.png"
     },
     {
@@ -51,7 +51,7 @@
       "age": 29,
       "rating": 5,
       "quoteColor": "orange",
-      "text": "Super appli. Des missions simples, des recompenses utiles et des commercants au top.",
+      "text": "Super appli. Des missions simples, des récompenses utiles et des commerçants au top.",
       "avatar": "asset/photo marie.png"
     },
     {
@@ -60,7 +60,7 @@
       "age": 35,
       "rating": 5,
       "quoteColor": "green",
-      "text": "Je gagne des credits facilement et je les depense dans mes commerces preferes. Win-win.",
+      "text": "Je gagne des crédits facilement et je les dépense dans mes commerces préférés. Win-win.",
       "avatar": null
     }
   ]

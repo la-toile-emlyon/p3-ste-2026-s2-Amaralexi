@@ -71,6 +71,7 @@ li {
 
 
 /* 4) header */
+/* Header de la page documentation (anime via document.js) */
 .header {
     position: fixed;
     top: 0;
@@ -492,6 +493,32 @@ header nav a {
     font-size: 16px;
 }
 
+.w-50g{
+    width: calc(50% - 8px);
+}
+
+.w-30g{
+    width: calc(30% - 8px);
+}
+
+.w-25g{
+    width: calc(25% - 8px);
+}
+
+.w-80g{
+    width: calc(80% - 8px);
+}
+
+.height-200 {
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.height-400 {
+    height: 400px;
+}
+
 /* ------------------------------
             FLEXBOX
  ---------------------------------*/
@@ -724,9 +751,10 @@ header nav a {
     z-index: 100;
 }
 
+/* Sommaire documentation: reste derriere le header, visible quand le header se cache */
 .sommaire-documentation {
     position: fixed;
-    top: var(--header-offset);
+    top: 0;
     left: 0;
     z-index: 90;
     width: 100%;
@@ -980,3 +1008,4 @@ footer {
 .border-15 {
     border-radius: 15px;
 }
+

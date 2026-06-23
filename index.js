@@ -223,27 +223,37 @@ function initialiserHeaderAuScroll() {
     const entete = document.querySelector('.header');
     const racineDocument = document.documentElement;
     const blocSommaireDocumentation = document.querySelector('.sommaire-documentation');
-    const SEUIL_HAUT_PAGE = 10;
-    const SEUIL_MOUVEMENT_SCROLL = 10;
+    // Reglages rapides du header au scroll (tu peux ajuster ici directement)
+    const CONFIG_SCROLL_HEADER = {
+        seuilHautPage: 10,
+        seuilMouvement: 10,
+        // Plus la valeur est grande, plus il faut remonter avant que le header revienne.
+        seuilReapparition: 150,
+        // Plus la valeur est grande, plus il attend avant de reapparaitre.
+        delaiReapparitionMs: 150,
+    };
 
     if (!entete) {
         return;
     }
 
+    // La page documentation gere son header dans document.js.
+    if (blocSommaireDocumentation) {
+        return;
+    }
+
     function ajusterEspaceHeader(estVisible) {
         const hauteurHeader = entete.offsetHeight;
-        const hauteurSommaire = blocSommaireDocumentation ? blocSommaireDocumentation.offsetHeight : 0;
         const positionHeader = window.getComputedStyle(entete).position;
         const headerEstFixe = positionHeader === 'fixed';
 
         // Avec un header sticky, il ne faut pas ajouter son espace dans le body,
         // sinon cela cree un vide inutile en haut de page.
         const espaceHeaderReserve = headerEstFixe ? (estVisible ? hauteurHeader : 0) : 0;
-        const espaceHaut = espaceHeaderReserve + hauteurSommaire;
+        const espaceHaut = espaceHeaderReserve;
 
         document.body.style.paddingTop = `${espaceHaut}px`;
         racineDocument.style.setProperty('--header-height', `${entete.offsetHeight}px`);
-        racineDocument.style.setProperty('--sommaire-height', `${hauteurSommaire}px`);
         const offsetHeader = estVisible ? `${entete.offsetHeight}px` : '0px';
         racineDocument.style.setProperty('--header-offset', offsetHeader);
     }
@@ -252,6 +262,8 @@ function initialiserHeaderAuScroll() {
     ajusterEspaceHeader(true);
 
     let dernierePositionY = window.scrollY;
+    let distanceRemonteeCumulee = 0;
+    let debutRemonteeTimestamp = null;
 
     window.addEventListener('resize', () => {
         const headerVisible = !entete.classList.contains('header-hidden');
@@ -262,16 +274,17 @@ function initialiserHeaderAuScroll() {
         const scrollActuelY = Math.max(0, window.scrollY);
         const variationScroll = scrollActuelY - dernierePositionY;
 
-        if (scrollActuelY <= SEUIL_HAUT_PAGE) {
+        if (scrollActuelY <= CONFIG_SCROLL_HEADER.seuilHautPage) {
             entete.classList.remove('header-hidden');
             ajusterEspaceHeader(true);
+            distanceRemonteeCumulee = 0;
+            debutRemonteeTimestamp = null;
             dernierePositionY = scrollActuelY;
             return;
         }
 
         // Evite les micro variations qui provoquent des clignotements.
-        if (Math.abs(variationScroll) < SEUIL_MOUVEMENT_SCROLL) {
-            dernierePositionY = scrollActuelY;
+        if (Math.abs(variationScroll) < CONFIG_SCROLL_HEADER.seuilMouvement) {
             return;
         }
 
@@ -279,10 +292,23 @@ function initialiserHeaderAuScroll() {
             // On descend: on cache le header.
             entete.classList.add('header-hidden');
             ajusterEspaceHeader(false);
+            distanceRemonteeCumulee = 0;
+            debutRemonteeTimestamp = null;
         } else {
-            // On remonte: le header reapparait tout de suite.
-            entete.classList.remove('header-hidden');
-            ajusterEspaceHeader(true);
+            // On remonte: on attend une vraie remontee avant de reafficher le header.
+            if (debutRemonteeTimestamp === null) {
+                debutRemonteeTimestamp = performance.now();
+            }
+
+            distanceRemonteeCumulee += Math.abs(variationScroll);
+            const dureeRemontee = performance.now() - debutRemonteeTimestamp;
+
+            if (distanceRemonteeCumulee >= CONFIG_SCROLL_HEADER.seuilReapparition && dureeRemontee >= CONFIG_SCROLL_HEADER.delaiReapparitionMs) {
+                entete.classList.remove('header-hidden');
+                ajusterEspaceHeader(true);
+                distanceRemonteeCumulee = 0;
+                debutRemonteeTimestamp = null;
+            }
         }
 
         dernierePositionY = scrollActuelY;
@@ -384,9 +410,6 @@ function activerCarrouselPartenairesAncien() {
         return;
     }
 
-    // On force le mode dynamique JS (comportement d'origine).
-    listePartenaires.classList.add('mode-js');
-
     // Evite de relancer l'initialisation plusieurs fois.
     if (listePartenaires.dataset.carouselPret === 'oui') {
         return;
@@ -398,32 +421,59 @@ function activerCarrouselPartenairesAncien() {
         return;
     }
 
-    // On considere que la 1re moitie est la serie de reference.
-    const nombreLogosSerie = Math.floor(tousLesLogos.length / 2);
+    // On considere que la 1re serie est la serie de reference (sur 3 series totales).
+    const nombreLogosSerie = Math.floor(tousLesLogos.length / 3);
     const logosSerie = tousLesLogos.slice(0, nombreLogosSerie);
 
     const appliquerDistanceDefilement = () => {
-        const stylesListe = window.getComputedStyle(listePartenaires);
-        const gapHorizontal = parseFloat(stylesListe.columnGap || stylesListe.gap || '0') || 0;
+        // Avec 3 séries de logos, divise par 3 pour avoir la distance correcte
+        const distanceReelle = listePartenaires.scrollWidth / 3;
 
-        const largeurSerie = logosSerie.reduce((total, logo) => {
-            return total + logo.getBoundingClientRect().width;
-        }, 0) + (gapHorizontal * logosSerie.length);
-
-        listePartenaires.style.setProperty('--defilement-distance', `${largeurSerie}px`);
+        listePartenaires.style.setProperty('--defilement-distance', `${distanceReelle}px`);
     };
 
-    appliquerDistanceDefilement();
+    const activerModeCarrousel = () => {
+        // On bascule en mode JS seulement quand les tailles sont fiables.
+        listePartenaires.classList.add('mode-js');
+        // Petit délai pour s'assurer que le rendu est stable
+        setTimeout(() => {
+            appliquerDistanceDefilement();
+            listePartenaires.classList.add('is-carousel');
+            listePartenaires.dataset.carouselPret = 'oui';
+        }, 50);
+    };
 
-    // Active le style carrousel dans le CSS.
-    listePartenaires.classList.add('is-carousel');
-    listePartenaires.dataset.carouselPret = 'oui';
+    const imagesSerieNonChargees = logosSerie.filter((logo) => !logo.complete);
+
+    if (!imagesSerieNonChargees.length) {
+        activerModeCarrousel();
+    } else {
+        let imagesRestantes = imagesSerieNonChargees.length;
+
+        const gererFinChargement = () => {
+            imagesRestantes -= 1;
+
+            if (imagesRestantes <= 0) {
+                // Délai supplémentaire après le chargement pour stabiliser les dimensions.
+                setTimeout(() => {
+                    activerModeCarrousel();
+                }, 100);
+            }
+        };
+
+        imagesSerieNonChargees.forEach((logo) => {
+            logo.addEventListener('load', gererFinChargement, { once: true });
+            logo.addEventListener('error', gererFinChargement, { once: true });
+        });
+    }
 
     // Si la taille change (responsive), on recalcule la distance.
     window.addEventListener('resize', () => {
         appliquerDistanceDefilement();
     });
 }
+
+activerCarrouselPartenairesAncien();
 
 // ===== 6) Apparition des sections au scroll =====
 // On cache les sections puis elles apparaissent quand elles entrent dans l'ecran.

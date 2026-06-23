@@ -111,7 +111,7 @@ h6 {
 
 /* 4) header */
 .header {
-    position: sticky;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -1040,11 +1040,11 @@ h6 {
     margin-bottom: 24px;
     width: max-content;
     --defilement-distance: 0px;
-    animation: defilement-partenaires-simple 18s linear infinite;
+    animation: defilement-partenaires-simple 22s linear infinite;
 }
 
 .liste-partenaires img {
-    width: 210px;
+    width: 200px;
     height: 110px;
     object-fit: contain;
     display: block;
@@ -1056,7 +1056,7 @@ h6 {
 }
 
 .liste-partenaires.mode-js.is-carousel {
-    animation: defilement-partenaires 18s linear infinite;
+    animation: defilement-partenaires 22s linear infinite;
 }
 
 @keyframes defilement-partenaires-simple {
